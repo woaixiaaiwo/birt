@@ -11,6 +11,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.log4j.Logger;
+
 import net.sf.json.JSONObject;
 import sun.misc.BASE64Decoder;
 import wubo.utils.FileNameUtil;
@@ -18,6 +22,7 @@ import wubo.utils.FileNameUtil;
  * Servlet implementation class UploadServlet
  */
 public class UploadServlet extends HttpServlet {
+	private static Logger log = Logger.getLogger(UploadServlet.class); 
 	private static final long serialVersionUID = 1L;
 
     /**
@@ -41,24 +46,26 @@ public class UploadServlet extends HttpServlet {
 		response.setContentType("application/json");
 		String filePath=this.getServletConfig().getServletContext().getRealPath("/"); 
 		String realpath = filePath+"/reportFiles";
+		log.info("要上传的文件路径为："+realpath);
 		String jsondata = readJSONString(request);
 		JSONObject requestjson = JSONObject.fromObject(jsondata);
 		JSONObject responsejson = new JSONObject();
 		String filename = requestjson.getString("fileName");
 		filename = FileNameUtil.encodeToFileName(filename);
 		String filedata = requestjson.getString("fileData");
+		log.info("文件名为:"+filename);
 		if(filename == null || "".equals(filename)){
 			responsejson.put("success",false);
 			responsejson.put("message","文件名不存在");
+			log.error("文件名为空");
 			response.getWriter().print(responsejson);
-			System.out.println("文件名不存在！");
 			return;
 		}
 		else if(filedata == null || "".equals(filedata)){
 			responsejson.put("success",false);
 			responsejson.put("message","文件数据不存在");
+			log.error("文件数据不存在！");
 			response.getWriter().print(responsejson);
-			System.out.println("文件数据不存在！");
 			return;
 		}
         try{
@@ -71,8 +78,8 @@ public class UploadServlet extends HttpServlet {
     		fos.close();
     		responsejson.put("success",true);
 			responsejson.put("message","保存成功");
+			log.info("保存成功！");
 			response.getWriter().print(responsejson);
-			System.out.println("保存成功！");
 			return;
         }catch(Exception e){
         	e.printStackTrace();

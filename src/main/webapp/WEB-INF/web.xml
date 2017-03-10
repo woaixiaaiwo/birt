@@ -5,9 +5,12 @@
   <!-- birt配置 -->
 		<!-- Default locale setting.-->
 		<context-param>
-			<param-name>BIRT_VIEWER_LOCALE</param-name>
-			<param-value>en-US</param-value>
-		</context-param>
+
+        	<param-name>webAppRootKey</param-name>
+
+        	<param-value> app.root </param-value>
+
+   		 </context-param>
 
 
 		<!-- 
@@ -190,6 +193,10 @@
 			<listener-class>org.eclipse.birt.report.listener.ViewerServletContextListener</listener-class>
 		</listener>
 		
+		<listener>
+			<listener-class>wubo.listener.Log4jConfigListener</listener-class>
+		</listener>
+		
 		
 		<!-- Viewer HttpSession Listener -->
 		<listener>
@@ -214,32 +221,33 @@
 			<servlet-class>wubo.servlets.UploadServlet</servlet-class>
 		</servlet>
 		<servlet>
-			<description>
-			</description>
 			<display-name>DownloadServlet</display-name>
 			<servlet-name>DownloadServlet</servlet-name>
 			<servlet-class>wubo.servlets.DownloadServlet</servlet-class>
 		</servlet>
 		<servlet>
-			<description>
-			</description>
 			<display-name>DeleteServlet</display-name>
 			<servlet-name>DeleteServlet</servlet-name>
 			<servlet-class>wubo.servlets.DeleteServlet</servlet-class>
 		</servlet>
 		<servlet>
-			<description>
-			</description>
 			<display-name>ValidateDrivers</display-name>
 			<servlet-name>ValidateDrivers</servlet-name>
 			<servlet-class>wubo.servlets.ValidateDrivers</servlet-class>
 		</servlet>
 		<servlet>
-			<description>
-			</description>
 			<display-name>DriverServlet</display-name>
 			<servlet-name>DriverServlet</servlet-name>
 			<servlet-class>wubo.servlets.DriverServlet</servlet-class>
+		</servlet>
+		<servlet>
+			<servlet-name>Log4JInitServlet</servlet-name>
+			<servlet-class>wubo.servlets.Log4JInitServlet</servlet-class>
+			<init-param>  
+            <param-name>log4j-properties-location</param-name>  
+            <param-value>/WEB-INF/classes/log4j.properties</param-value>  
+        	</init-param>  
+        	<load-on-startup>1</load-on-startup>  
 		</servlet>
 		
 		
@@ -338,7 +346,7 @@
         </init-param>  
         <init-param>  
             <param-name>serverName</param-name>  
-            <param-value>http://127.0.0.1:8081</param-value>
+            <param-value>http://172.20.0.203:8080</param-value>
         </init-param>
         <init-param>
 			<param-name>excludePaths</param-name>
@@ -364,7 +372,7 @@
         </init-param>  
         <init-param>  
             <param-name>serverName</param-name>  
-            <param-value>http://127.0.0.1:8081</param-value>
+            <param-value>http://172.20.0.203:8080</param-value>
         </init-param>  
     </filter>  
     <filter-mapping>  

@@ -16,7 +16,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.fop.util.Finalizable;
+import org.apache.log4j.Logger;
 
 import net.sf.json.JSONObject;
 
@@ -24,6 +27,9 @@ import net.sf.json.JSONObject;
  * Servlet implementation class ValidateDrivers
  */
 public class ValidateDrivers extends HttpServlet {
+	//private final Logger log = LoggerFactory.getLogger(ValidateDrivers.class);
+
+	private static Logger log = Logger.getLogger(ValidateDrivers.class); 
 	private static final long serialVersionUID = 1L;
 	
 	private static final String [] FILENAMES={
@@ -129,8 +135,10 @@ public class ValidateDrivers extends HttpServlet {
 			"saaj.jar",
 			"servlet-api.jar",
 			"Tidy.jar",
-			"viewservlets.jar"
-
+			"viewservlets.jar",
+			"log4j-1.2.17.jar",
+			"slf4j-api-1.7.21.jar",
+			"slf4j-log4j12-1.7.21.jar"
 	};
 	
 	private static final String MySQL_DRIVER_NAME="com.mysql.jdbc.Driver";
@@ -169,7 +177,7 @@ public class ValidateDrivers extends HttpServlet {
 	
 	
 	private void validate(JSONObject responsejson,String uploadPath){
-		
+		log.info("开始扫描lib文件夹:"+uploadPath);
 		File f = new File(uploadPath);
 		List<File> extrafiles = new ArrayList<File>();
 		List<String> filenames = new ArrayList<String>();
@@ -185,7 +193,10 @@ public class ValidateDrivers extends HttpServlet {
 				extrafiles.add(f1);
 			}
 		}
-		
+		log.info("额外jar包为：");
+		for(File file:extrafiles){
+			log.info(file.getName());
+		}
 		//MySql驱动
 		try{
 			//mysql驱动
@@ -197,6 +208,7 @@ public class ValidateDrivers extends HttpServlet {
 			//sqlserver2005驱动
 			boolean sqlser2005 = false;
 			for(File file:extrafiles){
+				log.info("开始校验"+file.getName());
 				if(validateDriver(file,MySQL_DRIVER_NAME)){
 					mysql = true;
 					continue;
@@ -222,6 +234,7 @@ public class ValidateDrivers extends HttpServlet {
 			responsejson = new JSONObject();
 			responsejson.put("success",false);
 			responsejson.put("message","校验失败");
+			log.error("校验失败");
 		}
 		
 		
