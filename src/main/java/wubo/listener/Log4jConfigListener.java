@@ -18,7 +18,7 @@ public class Log4jConfigListener implements ServletContextListener{
 		String path = Environment.class.getResource("").getPath();  
 		String webAppPath = path.substring(0, path.toUpperCase().lastIndexOf("WEB-INF/")).replaceAll("%20", " ");  
 		webAppPath = webAppPath.substring(webAppPath.indexOf("/"));
-		webAppPath = webAppPath+File.separator+"logs"+File.separator;
+		webAppPath = webAppPath+"logs"+File.separator;
 		System.out.println("The Log File's folder is: "+webAppPath);
 		System.setProperty("webapp",webAppPath);
 	}
