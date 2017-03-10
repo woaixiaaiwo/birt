@@ -54,7 +54,7 @@ public class DownloadServlet extends HttpServlet {
 		if(filename == null || "".equals(filename)){
 				responsejson.put("success",false);
 				responsejson.put("message","nofilename");
-				log.error("文件名为空!");
+				log.error("文件名为空!"+responsejson.toString());
 				response.getWriter().print(responsejson);
 				return;
 		}
@@ -84,7 +84,7 @@ public class DownloadServlet extends HttpServlet {
 		}else{
 			responsejson.put("success",false);
 			responsejson.put("message","nofile");
-			log.error("无此文件");
+			log.error("无此文件"+responsejson.toString());
 			response.getWriter().print(responsejson);
 			return;
 		}

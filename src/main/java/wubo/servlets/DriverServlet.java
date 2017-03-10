@@ -82,10 +82,10 @@ public class DriverServlet extends HttpServlet {
 			 try{
 				 part.write(savePath+File.separator+fileName);
 			 }catch(Exception e){
-				 log.error("创建文件失败...",e);
 				 PrintWriter out = response.getWriter();
 				 responsejson.put("success",false);
 				 responsejson.put("message",e.getMessage());
+				 log.error("创建文件失败..."+responsejson.toString(),e);
 				 out.print(responsejson);
 				 out.flush();
 				 out.close();
@@ -106,6 +106,7 @@ public class DriverServlet extends HttpServlet {
 		 PrintWriter out = response.getWriter();
 		 responsejson.put("success",true);
 		 responsejson.put("message","上传成功");
+		 log.info("上传成功!"+responsejson.toString());
 		 out.print(responsejson);
 		 out.flush();
 		 out.close();
@@ -148,4 +149,3 @@ public class DriverServlet extends HttpServlet {
 	}
 
 }
-

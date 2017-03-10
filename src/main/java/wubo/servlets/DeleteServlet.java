@@ -45,7 +45,7 @@ public class DeleteServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String filePath=this.getServletConfig().getServletContext().getRealPath("/"); 
 		String realpath = filePath+"/reportFiles";
-		log.info("要删除的文件路径为："+realpath);
+		log.info("删除文件路径为:"+realpath);
 		File file = new File(realpath);
 		File[] files = file.listFiles();
 		ArrayList<String> fileNames = new ArrayList<String>();
@@ -53,7 +53,7 @@ public class DeleteServlet extends HttpServlet {
 		JSONObject requestjson = JSONObject.fromObject(jsondata);
 		String filename = requestjson.getString("fileName");
 		filename = FileNameUtil.encodeToFileName(filename);
-		log.info("要删除的文件名："+filename);
+		log.info("删除文件名为:"+filename);
 		for(File f:files){
 			fileNames.add(f.getName().substring(0,f.getName().indexOf(".rptdesign")));
 		}
@@ -67,7 +67,7 @@ public class DeleteServlet extends HttpServlet {
 					file.delete();
 					responsejson.put("success",true);
 					responsejson.put("message","删除成功");
-					log.info("删除成功!");
+					log.info("删除成功!"+responsejson.toString());
 					response.getWriter().print(responsejson);
 					return;
 				}catch(Exception e){
@@ -81,14 +81,14 @@ public class DeleteServlet extends HttpServlet {
 			else{
 				responsejson.put("success",true);
 				responsejson.put("message","删除成功");
-				log.info("删除成功!");
+				log.info("删除成功!"+responsejson.toString());
 				response.getWriter().print(responsejson);
 				return;
 			}
 		}else{
 			responsejson.put("success",true);
 			responsejson.put("message","删除成功");
-			log.info("删除成功!");
+			log.info("Delete Success!"+responsejson.toString());
 			response.getWriter().print(responsejson);
 			return;
 		}

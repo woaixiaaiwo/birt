@@ -57,14 +57,14 @@ public class UploadServlet extends HttpServlet {
 		if(filename == null || "".equals(filename)){
 			responsejson.put("success",false);
 			responsejson.put("message","文件名不存在");
-			log.error("文件名为空");
+			log.error("文件名为空"+responsejson.toString());
 			response.getWriter().print(responsejson);
 			return;
 		}
 		else if(filedata == null || "".equals(filedata)){
 			responsejson.put("success",false);
 			responsejson.put("message","文件数据不存在");
-			log.error("文件数据不存在！");
+			log.error("文件数据不存在！"+responsejson.toString());
 			response.getWriter().print(responsejson);
 			return;
 		}
@@ -78,7 +78,7 @@ public class UploadServlet extends HttpServlet {
     		fos.close();
     		responsejson.put("success",true);
 			responsejson.put("message","保存成功");
-			log.info("保存成功！");
+			log.info("保存成功！"+responsejson.toString());
 			response.getWriter().print(responsejson);
 			return;
         }catch(Exception e){

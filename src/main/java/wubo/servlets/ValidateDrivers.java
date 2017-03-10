@@ -172,6 +172,7 @@ public class ValidateDrivers extends HttpServlet {
 		JSONObject responsejson = new JSONObject();
 		String uploadPath = request.getServletContext().getRealPath("/WEB-INF/lib");
 		validate(responsejson,uploadPath);
+		log.info("请求成功！"+responsejson.toString());
 		response.getWriter().write(responsejson.toString());
 	}
 	
