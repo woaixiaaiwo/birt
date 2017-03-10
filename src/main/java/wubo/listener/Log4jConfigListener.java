@@ -1,5 +1,7 @@
 package wubo.listener;
 
+import java.io.File;
+
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
@@ -16,6 +18,7 @@ public class Log4jConfigListener implements ServletContextListener{
 		String path = Environment.class.getResource("").getPath();  
 		String webAppPath = path.substring(0, path.toUpperCase().lastIndexOf("WEB-INF/")).replaceAll("%20", " ");  
 		webAppPath = webAppPath.substring(webAppPath.indexOf("/")+1);
+		webAppPath = webAppPath+File.separator+"WEB-INF"+File.separator+"classes"+File.separator+"logs"+File.separator;
 		System.out.println("The Log File's folder is: "+webAppPath);
 		System.setProperty("webapp",webAppPath);
 	}
